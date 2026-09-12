@@ -45,7 +45,7 @@ lemma zero_less_word_size[Arch_AC_assms, simp]:
 declare set_mrs_state_hyp_refs_of[Arch_AC_assms]
 declare storeWord_respects[Arch_AC_assms]
 
-end
+end (* Arch *)
 
 
 global_interpretation Arch_AC?: Arch_AC
@@ -302,7 +302,7 @@ definition authorised_page_inv :: "'a PAS \<Rightarrow> page_invocation \<Righta
      PageMap asid cap ptr slots \<Rightarrow>
        pas_cap_cur_auth aag cap \<and> is_subject aag (fst ptr) \<and> authorised_slots aag slots
    | PageUnmap cap ptr \<Rightarrow> pas_cap_cur_auth aag (ArchObjectCap cap) \<and> is_subject aag (fst ptr)
-   | PageFlush typ start end pstart pd asid \<Rightarrow> True
+   | PageFlush typ start end (* Arch *) pstart pd asid \<Rightarrow> True
    | PageGetAddr ptr \<Rightarrow> True"
 
 crunch lookup_pt_slot

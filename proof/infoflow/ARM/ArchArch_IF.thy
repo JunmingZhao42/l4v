@@ -153,7 +153,7 @@ lemma thread_set_non_idle_globals_equiv[Arch_IF_assms]:
 declare arch_prepare_set_domain_inv[Arch_IF_assms]
 declare arch_prepare_next_domain_inv[Arch_IF_assms]
 
-end
+end (* Arch *)
 
 context begin interpretation Arch .
 
@@ -650,7 +650,7 @@ lemma perform_page_table_invocation_reads_respects:
   done
 
 lemma do_flush_reads_respects:
-  "reads_respects aag l \<top> (do_machine_op (do_flush typ start end pstart))"
+  "reads_respects aag l \<top> (do_machine_op (do_flush typ start end (* Arch *) pstart))"
   apply (cases "typ")
   by (wp dmo_mol_reads_respects dmo_cacheRangeOp_reads_respects
       | simp add: do_flush_def cache_machine_op_defs do_flush_defs dmo_bind_ev when_def
