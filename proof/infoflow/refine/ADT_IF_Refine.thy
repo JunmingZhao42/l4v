@@ -143,8 +143,8 @@ crunch device_memory_update
 
 lemma corres_gets_same:
   assumes equiv: "\<And>s s'. \<lbrakk>P s; Q s'; (s, s') \<in> sr\<rbrakk>\<Longrightarrow> f s = g s'"
-  and rimp: "\<And>s. P s \<Longrightarrow> R (f s) s"
-  and corres: "\<And>r.  corres_underlying sr b c rr (P and (R r) and (\<lambda>s. r = f s)) Q (n r) (m r)"
+  assumes rimp: "\<And>s. P s \<Longrightarrow> R (f s) s"
+  assumes corres: "\<And>r.  corres_underlying sr b c rr (P and (R r) and (\<lambda>s. r = f s)) Q (n r) (m r)"
   shows "corres_underlying sr b c rr P Q (do r \<leftarrow> gets f; n r od) (do r \<leftarrow> gets g; m r od)"
   apply (rule corres_guard_imp)
     apply (rule corres_split[where r' = "(=)"])
@@ -203,76 +203,76 @@ locale ADT_IF_Refine_1 =
     "tcb_relation tcb tcb'
      \<Longrightarrow> tcb_relation (tcb\<lparr>tcb_arch := arch_tcb_context_set tc (tcb_arch tcb)\<rparr>)
                       (tcbArch_update (atcbContextSet tc) tcb')"
-  and arch_tcb_context_get_atcbContextGet:
+  assumes arch_tcb_context_get_atcbContextGet:
     "tcb_relation tcb tcb'
      \<Longrightarrow> (arch_tcb_context_get \<circ> tcb_arch) tcb = (atcbContextGet \<circ> tcbArch) tcb'"
-  and doUserOp_if_empty_fail:
+  assumes doUserOp_if_empty_fail:
     "empty_fail (doUserOp_if uop tc)"
-  and do_user_op_if_corres:
+  assumes do_user_op_if_corres:
     "corres (=) (einvs and ct_running and (\<lambda>_. \<forall>t pl pr pxn tcu. f t pl pr pxn tcu \<noteq> {}))
                 (invs' and (\<lambda>s. ksSchedulerAction s = ResumeCurrentThread) and ct_running')
                 (do_user_op_if f tc) (doUserOp_if f tc)"
-  and doUserOp_if_invs'[wp]:
+  assumes doUserOp_if_invs'[wp]:
     "\<lbrace>invs' and (\<lambda>s. ksSchedulerAction s = ResumeCurrentThread) and ct_running' and ex_abs (einvs)\<rbrace>
      doUserOp_if f tc
      \<lbrace>\<lambda>_. invs'\<rbrace>"
-  and doUserOp_arch_extras[wp]:
+  assumes doUserOp_arch_extras[wp]:
     "doUserOp_if f tc \<lbrace>arch_extras\<rbrace>"
-  and doUserOp_if_schedact[wp]:
+  assumes doUserOp_if_schedact[wp]:
     "\<And>P. doUserOp_if f tc \<lbrace>\<lambda>s. P (ksSchedulerAction s)\<rbrace>"
-  and doUserOp_if_st_tcb_at[wp]:
+  assumes doUserOp_if_st_tcb_at[wp]:
     "doUserOp_if f tc \<lbrace>st_tcb_at' st t\<rbrace>"
-  and doUserOp_if_cur_thread[wp]:
+  assumes doUserOp_if_cur_thread[wp]:
     "\<And>P. doUserOp_if f tc \<lbrace>\<lambda>s. P (ksCurThread s)\<rbrace>"
-  and do_user_op_if_corres':
+  assumes do_user_op_if_corres':
     "corres_underlying state_relation nf False (=) (einvs and ct_running)
        (invs' and (\<lambda>s. ksSchedulerAction s = ResumeCurrentThread) and ct_running')
        (do_user_op_if f tc) (doUserOp_if f tc)"
-  and dmo_getActiveIRQ_corres:
+  assumes dmo_getActiveIRQ_corres:
     "corres (=) \<top> \<top> (do_machine_op (getActiveIRQ in_kernel)) (doMachineOp (getActiveIRQ in_kernel))"
-  and dmo'_getActiveIRQ_wp:
+  assumes dmo'_getActiveIRQ_wp:
     "\<lbrace>\<lambda>s. P (irq_at (irq_state (ksMachineState s) + 1) (irq_masks (ksMachineState s)))
             (s\<lparr>ksMachineState := (ksMachineState s\<lparr>irq_state := irq_state (ksMachineState s) + 1\<rparr>)\<rparr>)\<rbrace>
      doMachineOp (getActiveIRQ False)
      \<lbrace>P\<rbrace>"
-  and handlePreemption_arch_extras[wp]:
+  assumes handlePreemption_arch_extras[wp]:
     "handlePreemption_if tc \<lbrace>arch_extras\<rbrace>"
-  and scheduler_if'_arch_extras[wp]:
+  assumes scheduler_if'_arch_extras[wp]:
     "\<lbrace>invs' and arch_extras\<rbrace>
      schedule'_if tc
      \<lbrace>\<lambda>_. arch_extras\<rbrace>"
-  and checkActiveIRQ_ksPSpace[wp]:
+  assumes checkActiveIRQ_ksPSpace[wp]:
     "checkActiveIRQ_if tc \<lbrace>arch_extras\<rbrace>"
-  and kernelEntry_invs'[wp]:
+  assumes kernelEntry_invs'[wp]:
     "\<lbrace>invs' and (\<lambda>s. e \<noteq> Interrupt \<longrightarrow> ct_running' s)
             and (\<lambda>s. ksSchedulerAction s = ResumeCurrentThread)
             and arch_extras\<rbrace>
      kernelEntry_if e tc
      \<lbrace>\<lambda>_. invs'\<rbrace>"
-  and kernelEntry_arch_extras[wp]:
+  assumes kernelEntry_arch_extras[wp]:
     "\<lbrace>invs' and (\<lambda>s. e \<noteq> Interrupt \<longrightarrow> ct_running' s)
             and (\<lambda>s. ksSchedulerAction s = ResumeCurrentThread)
             and arch_extras\<rbrace>
      kernelEntry_if e tc
      \<lbrace>\<lambda>_. arch_extras\<rbrace>"
-  and threadSet_arch_extras[wp]:
+  assumes threadSet_arch_extras[wp]:
     "threadSet a b \<lbrace>arch_extras\<rbrace>"
-  and doUserOp_if_ksDomainTime_inv[wp]:
+  assumes doUserOp_if_ksDomainTime_inv[wp]:
     "\<And>P. doUserOp_if uop tc \<lbrace>\<lambda>s. P (ksDomainTime s)\<rbrace>"
-  and doUserOp_if_ksDomSchedule_inv[wp]:
+  assumes doUserOp_if_ksDomSchedule_inv[wp]:
     "\<And>P. doUserOp_if uop tc \<lbrace>\<lambda>s. P (ksDomSchedule s)\<rbrace>"
-  and valid_device_abs_state_eq:
+  assumes valid_device_abs_state_eq:
     "valid_machine_state (s :: det_state) \<Longrightarrow> abs_state s = s"
-  and doUserOp_if_no_interrupt:
+  assumes doUserOp_if_no_interrupt:
     "\<lbrace>K (uop_sane uop)\<rbrace> doUserOp_if uop tc \<lbrace>\<lambda>r s. (fst r) \<noteq> Some Interrupt\<rbrace>"
-  and handleEvent_corres_arch_extras:
+  assumes handleEvent_corres_arch_extras:
     "corres (dc \<oplus> dc)
        (einvs and (\<lambda>s. event \<noteq> Interrupt \<longrightarrow> ct_running s) and schact_is_rct)
        (invs' and (\<lambda>s. event \<noteq> Interrupt \<longrightarrow> ct_running' s)
               and (\<lambda>s. ksSchedulerAction s = ResumeCurrentThread)
               and arch_extras)
        (handle_event event) (handleEvent event)"
-  and kernel_entry_if_corres:
+  assumes kernel_entry_if_corres:
     "\<And>event tc.
      corres (prod_lift (dc \<oplus> dc))
        (einvs and no_domain_caps
