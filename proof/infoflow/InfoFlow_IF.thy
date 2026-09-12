@@ -330,7 +330,7 @@ context InfoFlow_IF_1 begin
 
 lemma states_equiv_for_refl:
   "states_equiv_for P Q R S s s"
-  by (auto simp: states_equiv_for_def  intro: equiv_for_refl equiv_asids_refl equiv_hyp_refl equiv_fpu_refl)
+  by (auto simp: states_equiv_for_def intro: equiv_for_refl equiv_asids_refl equiv_hyp_refl equiv_fpu_refl)
 
 lemma states_equiv_for_sym:
   "states_equiv_for P Q R S s t \<Longrightarrow> states_equiv_for P Q R S t s"
@@ -986,7 +986,7 @@ lemma do_machine_op_rev:
              and Q="\<lambda> rv s. rv = machine_state s " in equiv_valid_rv_bind)
     apply (blast intro: equiv_valid_rv_guard_imp[OF gets_machine_state_revrv'[simplified pred_conj_def]])
    apply (rule_tac R'="\<lambda> (r, ms') (r', ms'').  r = r' \<and> equiv_machine_state (aag_can_read aag) ms' ms''"
-              and Q="\<lambda> (r,ms') s. ms' = rv \<and> rv = machine_state s "
+              and Q="\<lambda> (r,ms') s. ms' = rv \<and> rv = machine_state s"
               and Q'="\<lambda> (r',ms'') s. ms'' = rv' \<and> rv' = machine_state s"
               and P="\<top>" and P'="\<top>" in equiv_valid_2_bind_pre)
         apply (clarsimp simp: modify_def get_def put_def bind_def return_def equiv_valid_2_def)

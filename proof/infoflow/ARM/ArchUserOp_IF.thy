@@ -992,7 +992,7 @@ lemma do_user_op_reads_respects_g:
    apply (erule impE)
     prefer 2
     apply assumption
-   apply (clarsimp simp: context_matches_state_def comp_def  reads_equiv_g_def globals_equiv_def)
+   apply (clarsimp simp: context_matches_state_def comp_def reads_equiv_g_def globals_equiv_def)
   apply (clarsimp simp: reads_equiv_g_def globals_equiv_def)
   done
 

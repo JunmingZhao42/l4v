@@ -547,7 +547,7 @@ crunch reschedule_required
 lemma cancel_badged_sends_globals_equiv:
   "\<lbrace>globals_equiv s and valid_arch_state\<rbrace>
    cancel_badged_sends epptr badge
-   \<lbrace>\<lambda>_. globals_equiv s\<rbrace> "
+   \<lbrace>\<lambda>_. globals_equiv s\<rbrace>"
   unfolding cancel_badged_sends_def
   by (wpsimp wp: set_endpoint_globals_equiv set_thread_state_globals_equiv
                  filterM_preserved get_simple_ko_wp)

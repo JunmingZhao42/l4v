@@ -120,7 +120,7 @@ lemma create_cap_list_integrity:
 lemma empty_slot_list_integrity:
   notes split_paired_All[simp del]
   shows
-  "\<lbrace>list_integ P st and (\<lambda>s. valid_list_2 (cdt_list s) m) and K(P slot) and K( all_children P m)\<rbrace> empty_slot_ext slot slot_p \<lbrace>\<lambda>_. list_integ P st\<rbrace>"
+  "\<lbrace>list_integ P st and (\<lambda>s. valid_list_2 (cdt_list s) m) and K(P slot) and K(all_children P m)\<rbrace> empty_slot_ext slot slot_p \<lbrace>\<lambda>_. list_integ P st\<rbrace>"
   apply (simp add: empty_slot_ext_def split del: if_split)
   apply (wp update_cdt_list_wp)
   apply (intro impI conjI allI | simp add: list_filter_replace_list list_filter_remove split: option.splits | elim conjE  | simp add: list_integ_def)+

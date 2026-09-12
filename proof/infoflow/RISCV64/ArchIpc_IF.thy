@@ -321,7 +321,7 @@ lemma copy_mrs_reads_respects[Ipc_IF_assms]:
    apply (simp add: msg_align_bits word_bits_def)
   apply (simp add: word_size_def word_size_bits_def)
   apply (subst upto_enum_step_shift_red[where us=3, simplified])
-     apply (simp add: msg_align_bits word_bits_def aag_can_read_or_affect_ipc_buffer_def )+
+     apply (simp add: msg_align_bits word_bits_def aag_can_read_or_affect_ipc_buffer_def)+
   apply (fastforce simp: image_def)
   done
 

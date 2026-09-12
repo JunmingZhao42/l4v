@@ -207,7 +207,7 @@ lemma doUserOp_if_schedact[ADT_IF_Refine_assms, wp]:
   done
 
 lemma doUserOp_if_st_tcb_at[ADT_IF_Refine_assms, wp]:
-   "doUserOp_if f tc \<lbrace>st_tcb_at' st t\<rbrace>"
+  "doUserOp_if f tc \<lbrace>st_tcb_at' st t\<rbrace>"
   apply (simp add: doUserOp_if_def)
   apply (wp | wpc | simp)+
   done
@@ -348,12 +348,12 @@ lemma doUserOp_if_no_interrupt[ADT_IF_Refine_assms]:
   done
 
 lemma handleEvent_corres_arch_extras[ADT_IF_Refine_assms]:
-    "corres (dc \<oplus> dc)
-       (einvs and (\<lambda>s. event \<noteq> Interrupt \<longrightarrow> ct_running s) and schact_is_rct)
-       (invs' and (\<lambda>s. event \<noteq> Interrupt \<longrightarrow> ct_running' s)
-              and (\<lambda>s. ksSchedulerAction s = ResumeCurrentThread)
-              and arch_extras)
-       (handle_event event) (handleEvent event)"
+  "corres (dc \<oplus> dc)
+          (einvs and (\<lambda>s. event \<noteq> Interrupt \<longrightarrow> ct_running s) and schact_is_rct)
+          (invs' and (\<lambda>s. event \<noteq> Interrupt \<longrightarrow> ct_running' s)
+                 and (\<lambda>s. ksSchedulerAction s = ResumeCurrentThread)
+                 and arch_extras)
+          (handle_event event) (handleEvent event)"
   by (fastforce intro: corres_guard2_imp[OF handleEvent_corres])
 
 lemma handle_event_valid_domain_time_IRQ:

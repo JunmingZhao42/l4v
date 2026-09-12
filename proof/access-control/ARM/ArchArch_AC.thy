@@ -39,7 +39,7 @@ lemma mul_add_word_size_lt_msg_align_bits_ofnat[Arch_AC_assms]:
   done
 
 lemma zero_less_word_size[Arch_AC_assms, simp]:
-    "0 < (word_size :: obj_ref)"
+  "0 < (word_size :: obj_ref)"
   by (simp add: word_size_def)
 
 declare set_mrs_state_hyp_refs_of[Arch_AC_assms]
@@ -166,7 +166,7 @@ lemma unmap_page_table_respects:
    unmap_page_table asid vaddr pt
    \<lbrace>\<lambda>_. integrity aag X st\<rbrace>"
   apply (rule hoare_gen_asm)
-  apply (simp add: unmap_page_table_def page_table_mapped_def )
+  apply (simp add: unmap_page_table_def page_table_mapped_def)
   apply (rule hoare_pre)
    apply (wpsimp wp: store_pde_respects page_table_mapped_wp_weak get_pde_wp hoare_vcg_all_liftE_R
                simp: cleanByVA_PoU_def
@@ -480,7 +480,7 @@ proof -
                   mapM_x_and_const_wp[OF store_pde_respects] store_pde_respects
                | elim conjE hd_valid_slots[THEN bspec[rotated]]
                | clarsimp dest!: set_tl_subset_mp
-               | wpc )+
+               | wpc)+
    apply (clarsimp simp: cte_wp_at_caps_of_state cap_rights_update_def
                          acap_rights_update_def update_map_data_def is_pg_cap_def
                          valid_page_inv_def valid_cap_simps

@@ -34,7 +34,7 @@ lemma is_irq_active_rev:
 
 (* FIXME: move *)
 lemma if_apply_ev:
-  "equiv_valid I A B P (if a then b x  else c x) \<Longrightarrow>
+  "equiv_valid I A B P (if a then b x else c x) \<Longrightarrow>
    equiv_valid I A B P ((if a then b else c) x)"
   by (simp split: if_split_asm)
 

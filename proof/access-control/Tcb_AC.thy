@@ -140,7 +140,7 @@ lemma set_priority_pas_refined[wp]:
   by (wpsimp wp: thread_set_pas_refined)
 
 lemma gts_test[wp]:
-   "\<lbrace>\<top>\<rbrace> get_thread_state t \<lbrace>\<lambda>rv s. test rv = st_tcb_at test t s\<rbrace>"
+  "\<lbrace>\<top>\<rbrace> get_thread_state t \<lbrace>\<lambda>rv s. test rv = st_tcb_at test t s\<rbrace>"
   apply (simp add: get_thread_state_def thread_get_def)
   apply wp
   apply (clarsimp simp add: st_tcb_def2)
@@ -521,7 +521,7 @@ lemma decode_unbind_notification_authorised:
 
 lemma decode_bind_notification_authorised:
   "\<lbrace>K (is_subject aag t \<and> (\<forall>x \<in> set excaps. is_subject aag (fst (snd x)))
-                        \<and> (\<forall>x \<in> set excaps. pas_cap_cur_auth aag (fst x)) )\<rbrace>
+                        \<and> (\<forall>x \<in> set excaps. pas_cap_cur_auth aag (fst x)))\<rbrace>
    decode_bind_notification (ThreadCap t) excaps
    \<lbrace>\<lambda>rv _. authorised_tcb_inv aag rv\<rbrace>, -"
   unfolding decode_bind_notification_def authorised_tcb_inv_def

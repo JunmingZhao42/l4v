@@ -218,7 +218,7 @@ lemma partitionIntegrity_subjectAffects_asid[Noninterference_assms]:
     apply (drule partitionIntegrity_integrity)
     apply (drule integrity_subjects_obj)
     apply (drule_tac x="pool_ptr" in spec)+
-    apply (drule tro_tro_alt, erule integrity_obj_alt.cases;simp )
+    apply (drule tro_tro_alt, erule integrity_obj_alt.cases; simp)
      apply (drule_tac t="pasSubject aag" in sym)
      apply simp
      apply (rule sata_asidpool)

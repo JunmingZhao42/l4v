@@ -218,11 +218,11 @@ lemma gets_apply_ev':
   by (clarsimp simp: gets_apply_def get_def bind_def return_def equiv_valid_def2 equiv_valid_2_def)
 
 lemma do_machine_op_globals_equiv:
-   "(\<And>s sa. \<lbrakk> P sa; globals_equiv s sa \<rbrakk>
-              \<Longrightarrow> \<forall>x\<in>fst (f (machine_state sa)). globals_equiv s (sa\<lparr>machine_state := snd x\<rparr>))
-    \<Longrightarrow> \<lbrace>globals_equiv s and P\<rbrace>
-        do_machine_op f
-        \<lbrace>\<lambda>_. globals_equiv s\<rbrace>"
+  "(\<And>s sa. \<lbrakk> P sa; globals_equiv s sa \<rbrakk>
+            \<Longrightarrow> \<forall>x\<in>fst (f (machine_state sa)). globals_equiv s (sa\<lparr>machine_state := snd x\<rparr>))
+   \<Longrightarrow> \<lbrace>globals_equiv s and P\<rbrace>
+       do_machine_op f
+       \<lbrace>\<lambda>_. globals_equiv s\<rbrace>"
   unfolding do_machine_op_def
   apply (wp | simp add: split_def)+
   done

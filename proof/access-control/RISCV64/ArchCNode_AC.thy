@@ -174,7 +174,7 @@ crunch set_cdt_list, update_cdt_list
 lemma thread_set_arch_trivT[CNode_AC_assms]:
   assumes arch: "\<And>tcb. tcb_arch (f tcb) = tcb_arch tcb"
   shows "thread_set f t \<lbrace>\<lambda>s. P (state_hyp_refs_of s)\<rbrace>"
-  apply (wpsimp simp: thread_set_def wp: set_object_wp )
+  apply (wpsimp simp: thread_set_def wp: set_object_wp)
   apply (erule_tac P=P in back_subst)
   apply (rule ext)
   apply (simp add: arch state_hyp_refs_of_def get_tcb_def split: option.splits kernel_object.splits)

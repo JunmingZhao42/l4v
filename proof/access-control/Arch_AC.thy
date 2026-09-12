@@ -109,7 +109,7 @@ lemma set_mrs_thread_st_auth[wp]:
 lemma set_mrs_thread_bound_ntfns[wp]:
   "set_mrs thread buf msgs \<lbrace>\<lambda>s. P (thread_bound_ntfns s)\<rbrace>"
   supply if_split[split del]
-  apply (simp add: set_mrs_def split_def set_object_def get_object_def )
+  apply (simp add: set_mrs_def split_def set_object_def get_object_def)
   apply (wpsimp wp: gets_the_wp get_wp put_wp mapM_x_wp' dmo_wp
               simp: zipWithM_x_mapM_x split_def store_word_offs_def no_irq_storeWord)
   apply (clarsimp simp: fun_upd_def[symmetric] thread_bound_ntfns_preserved)

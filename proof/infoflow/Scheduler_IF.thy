@@ -273,7 +273,7 @@ lemma equiv_valid_inv_unobservable:
   assumes sym: "\<forall>s s'. I s s' \<and> A s s' \<longrightarrow> I s' s \<and> A s' s"
   assumes trans: "\<forall>s s' s''. I s s' \<and> A s s' \<longrightarrow> I s' s'' \<and> A s' s'' \<longrightarrow> I s s'' \<and> A s s''"
   assumes s: "\<And>s. Q s \<Longrightarrow> P s \<and> P' s"
-  shows "equiv_valid_inv I A  Q (f :: 'a \<Rightarrow> (unit \<times> 'a) set \<times> bool)"
+  shows "equiv_valid_inv I A Q (f :: 'a \<Rightarrow> (unit \<times> 'a) set \<times> bool)"
   apply (clarsimp simp add: equiv_valid_def spec_equiv_valid_def equiv_valid_2_def)
   apply (erule preserves_equivalence_weak,assumption)
        apply (rule hoare_pre)
@@ -792,7 +792,7 @@ lemma ev_asahi_ex_to_full_fragement:
                (do x \<leftarrow> modify (cur_thread_update (\<lambda>_. t));
                    set_scheduler_action resume_cur_thread
                 od)"
-  apply (clarsimp simp: gets_def get_def return_def select_f_def  bind_def
+  apply (clarsimp simp: gets_def get_def return_def select_f_def bind_def
                         set_scheduler_action_def assert_def simpler_modify_def fail_def)
   apply (fold simpler_modify_def)
   apply (rule ev_modify)
@@ -831,7 +831,7 @@ lemma midstrength_cur_domain_unobservable:
    \<Longrightarrow> midstrength_reads_respects_scheduler aag l
          (P and (\<lambda>s. \<not> reads_scheduler_cur_domain aag l s)) f"
   apply (clarsimp simp: scheduler_equiv_def domain_fields_equiv_def scheduler_affects_equiv_def
-                        equiv_valid_def2 equiv_valid_2_def  midstrength_scheduler_affects_equiv_def)
+                        equiv_valid_def2 equiv_valid_2_def midstrength_scheduler_affects_equiv_def)
   apply (drule_tac x=s in spec)
   apply (drule_tac x=t in spec)
   apply clarsimp
@@ -1488,7 +1488,7 @@ lemma schedule_choose_new_thread_read_respects_scheduler:
   assumes wellformed[wp]: "pas_wellformed_noninterference aag"
   shows "reads_respects_scheduler aag l
            (invs and pas_refined aag and valid_silc_label aag and valid_queues
-                 and cur_hyp_in_cur_domain and cur_fpu_in_cur_domain  and ct_in_cur_domain)
+                 and cur_hyp_in_cur_domain and cur_fpu_in_cur_domain and ct_in_cur_domain)
            schedule_choose_new_thread"
   unfolding schedule_choose_new_thread_def K_bind_def fun_app_def
   by (rule next_domain_snippit[OF wellformed])
@@ -1686,7 +1686,7 @@ lemma reads_respects_scheduler_invisible_domain_switch:
     apply (rule equiv_valid_2_bind_pre[where R'=dc])
          apply (rule equiv_valid_2_bind_pre[where R'="(=)"])
               apply simp
-              apply (rule_tac P="rvb = choose_new_thread" in  EquivValid.gen_asm_ev2_l)
+              apply (rule_tac P="rvb = choose_new_thread" in EquivValid.gen_asm_ev2_l)
               apply simp
               apply (rule equiv_valid_2_bind_pre)
                    apply (rule equiv_valid_2)
@@ -2200,7 +2200,7 @@ lemma equiv_valid_2_bind_right:
      \<And>st. \<lbrace>A st and D st and S''\<rbrace> f \<lbrace>\<lambda>r. A st\<rbrace>;
      \<And>s. T s \<Longrightarrow> P s \<and> S s \<and> S' s \<and> S'' s;
      \<And>s. T' s \<Longrightarrow> P s\<rbrakk>
-   \<Longrightarrow> equiv_valid_2 D A A R T' T g' (f >>= g) "
+   \<Longrightarrow> equiv_valid_2 D A A R T' T g' (f >>= g)"
   apply atomize
   apply (clarsimp simp: equiv_valid_2_def equiv_valid_def2 valid_def bind_def)
   apply fastforce
@@ -2213,7 +2213,7 @@ lemma get_irq_state_reads_respects_scheduler_trivial:
   "reads_respects_scheduler aag l (domain_sep_inv False st) (get_irq_state irq)"
   apply (simp add: get_irq_state_def)
   apply (rule equiv_valid_guard_imp)
-   apply (rule_tac P="domain_sep_inv False st" in  gets_ev')
+   apply (rule_tac P="domain_sep_inv False st" in gets_ev')
   apply clarsimp
   apply (clarsimp simp: domain_sep_inv_def)
   done

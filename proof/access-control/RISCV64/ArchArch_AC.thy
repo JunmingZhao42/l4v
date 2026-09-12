@@ -38,7 +38,7 @@ lemma mul_add_word_size_lt_msg_align_bits_ofnat[Arch_AC_assms]:
   done
 
 lemma zero_less_word_size[Arch_AC_assms, simp]:
-    "0 < (word_size :: obj_ref)"
+  "0 < (word_size :: obj_ref)"
   by (simp add: word_size_def)
 
 declare set_mrs_state_hyp_refs_of[Arch_AC_assms]
@@ -310,7 +310,7 @@ lemma store_pte_thread_bound_ntfns[wp]:
   "store_pte p pte \<lbrace>\<lambda>s. P (thread_bound_ntfns s)\<rbrace>"
   unfolding store_pte_def set_pt_def
   apply (wpsimp wp: set_object_wp)
-  apply (clarsimp simp: get_tcb_def thread_bound_ntfns_def  obj_at_def
+  apply (clarsimp simp: get_tcb_def thread_bound_ntfns_def obj_at_def
                  elim!: rsubst[where P=P, OF _ ext])
   done
 
@@ -654,7 +654,7 @@ lemma state_vrefs_store_PageTablePTE:
    apply clarsimp
    apply (drule vs_lookup_level)
    apply (case_tac "lvl = asid_pool_level")
-    apply (fastforce dest: vs_lookup_asid_pool  simp: asid_pools_of_ko_at obj_at_def)
+    apply (fastforce dest: vs_lookup_asid_pool simp: asid_pools_of_ko_at obj_at_def)
    apply (subst (asm) vs_lookup_slot_table_unfold; clarsimp)
    apply (fastforce dest: vs_lookup_table_unique_level split: if_splits)
   apply (clarsimp simp: state_vrefs_def opt_map_def)
@@ -991,10 +991,10 @@ definition authorised_page_inv :: "'a PAS \<Rightarrow> page_invocation \<Righta
    | PageGetAddr ptr \<Rightarrow> True"
 
 lemma perform_pg_inv_unmap_pas_refined:
-   "\<lbrace>pas_refined aag and invs and valid_page_inv (PageUnmap cap ct_slot)
-                     and authorised_page_inv aag (PageUnmap cap ct_slot)\<rbrace>
-    perform_pg_inv_unmap cap ct_slot
-    \<lbrace>\<lambda>_. pas_refined aag\<rbrace>"
+  "\<lbrace>pas_refined aag and invs and valid_page_inv (PageUnmap cap ct_slot)
+                    and authorised_page_inv aag (PageUnmap cap ct_slot)\<rbrace>
+   perform_pg_inv_unmap cap ct_slot
+   \<lbrace>\<lambda>_. pas_refined aag\<rbrace>"
   unfolding perform_pg_inv_unmap_def
   apply (strengthen invs_psp_aligned invs_vspace_objs invs_arch_state
          | wpsimp wp: unmap_page_pas_refined set_cap_pas_refined_not_transferable
@@ -1006,7 +1006,7 @@ lemma perform_pg_inv_unmap_pas_refined:
   done
 
 lemma set_cap_vs_lookup_slot[wp]:
-  "set_cap param_a param_b \<lbrace>\<lambda>s. P (vs_lookup_slot level asid vref s)\<rbrace> "
+  "set_cap param_a param_b \<lbrace>\<lambda>s. P (vs_lookup_slot level asid vref s)\<rbrace>"
   apply (clarsimp simp: vs_lookup_slot_def obind_def)
   apply (rule hoare_pre)
    apply (rule hoare_lift_Pf3[where f="\<lambda>s level asid vref. vs_lookup_table level asid vref s"])
@@ -1021,7 +1021,7 @@ crunch set_cap
   (simp: level_of_table_def)
 
 lemma set_cap_authorised_page_inv[wp]:
-  "set_cap param_a param_b \<lbrace>\<lambda>s. P (authorised_page_inv aag (PageMap cap ct_slot entries) s)\<rbrace> "
+  "set_cap param_a param_b \<lbrace>\<lambda>s. P (authorised_page_inv aag (PageMap cap ct_slot entries) s)\<rbrace>"
   apply (clarsimp simp: authorised_page_inv_def authorised_slots_def)
   apply (rule hoare_pre)
    apply wps
@@ -1030,7 +1030,7 @@ lemma set_cap_authorised_page_inv[wp]:
   done
 
 lemma set_cap_same_ref[wp]:
-  "set_cap param_a param_b \<lbrace>\<lambda>s. P (same_ref pte_slot cap s)\<rbrace> "
+  "set_cap param_a param_b \<lbrace>\<lambda>s. P (same_ref pte_slot cap s)\<rbrace>"
   apply (case_tac pte_slot; clarsimp)
   apply (clarsimp simp: same_ref_def)
   apply (rule hoare_pre)
@@ -1129,7 +1129,7 @@ lemma unmap_page_respects:
   apply (rule hoare_pre)
    apply (wpsimp wp: store_pte_respects
                      hoare_drop_imps[where Q="\<lambda>rv. integrity aag X st"]
-               simp: sfence_def  is_aligned_mask[symmetric]
+               simp: sfence_def is_aligned_mask[symmetric]
           | wp (once) hoare_drop_imps
                       mapM_set''[where f="(\<lambda>a. store_pte a InvalidPTE)"
                                    and I="\<lambda>x s. is_subject aag (x && ~~ mask pt_bits)"
@@ -1299,7 +1299,7 @@ lemma perform_asid_control_invocation_pas_refined:
    perform_asid_control_invocation aci
    \<lbrace>\<lambda>_. pas_refined aag\<rbrace>"
   apply (rule hoare_gen_asm)
-  apply (simp add: perform_asid_control_invocation_def )
+  apply (simp add: perform_asid_control_invocation_def)
   apply wpc
    apply (rule pas_refined_asid_control_helper bind_wp hoare_K_bind)+
          apply (wp cap_insert_pas_refined' hoare_weak_lift_imp | simp)+
@@ -1316,7 +1316,7 @@ lemma perform_asid_control_invocation_pas_refined:
                  hoare_vcg_all_lift hoare_weak_lift_imp retype_region_invs_extras
                  set_cap_pas_refined_not_transferable arch_update_cap_valid_mdb
              | simp add: do_machine_op_def region_in_kernel_window_def cte_wp_at_neg2)+)[3]
-   apply (rename_tac frame slot parent base )
+   apply (rename_tac frame slot parent base)
    apply (case_tac slot, rename_tac slot_ptr slot_idx)
    apply (case_tac parent, rename_tac parent_ptr parent_idx)
    apply (rule_tac Q'="\<lambda>rv s.

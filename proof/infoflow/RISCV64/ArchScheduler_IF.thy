@@ -341,7 +341,7 @@ lemma ackInterrupt_reads_respects_scheduler[Scheduler_IF_assms]:
   "reads_respects_scheduler aag l \<top> (do_machine_op (ackInterrupt irq))"
   apply (rule reads_respects_scheduler_unobservable)
    apply (rule scheduler_equiv_lift)
-        apply (simp add:  globals_equiv_scheduler_def[abs_def] idle_equiv_def)
+        apply (simp add: globals_equiv_scheduler_def[abs_def] idle_equiv_def)
         apply (rule hoare_pre)
          apply wps
          apply (wp dmo_wp ackInterrupt_irq_masks | simp add:no_irq_def)+

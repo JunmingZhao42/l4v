@@ -103,8 +103,8 @@ lemma arch_globals_equiv_strengthener_thread_independent[Noninterference_assms]:
   by auto
 
 lemma integrity_asids_update_reference_state[Noninterference_assms]:
-   "is_subject aag t
-    \<Longrightarrow> integrity_asids aag {pasSubject aag} x a s (s\<lparr>kheap := (kheap s)(t \<mapsto> blah)\<rparr>)"
+  "is_subject aag t
+   \<Longrightarrow> integrity_asids aag {pasSubject aag} x a s (s\<lparr>kheap := (kheap s)(t \<mapsto> blah)\<rparr>)"
   by (clarsimp simp: integrity_asids_def opt_map_def)
 
 lemma inte_obj_arch:

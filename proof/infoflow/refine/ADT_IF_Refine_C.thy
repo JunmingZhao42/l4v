@@ -604,7 +604,7 @@ lemma corres_select_f':
 context kernel_m begin
 
 lemma cur_thread_of_absKState[simp]:
-   "cur_thread (absKState s) = (ksCurThread s)"
+  "cur_thread (absKState s) = (ksCurThread s)"
    by (clarsimp simp: cstate_relation_def Let_def absKState_def cstate_to_H_def)
 
 lemma absKState_crelation:
@@ -659,7 +659,7 @@ lemma obs_cpspace_device_data_relation:
    apply (clarsimp simp: cmap_relation_def dom_heap_to_device_data)
    apply (drule bspec,fastforce)
    apply (clarsimp simp: cuser_user_data_device_relation_def observable_memory_def
-                         heap_to_user_data_def  map_comp_def Let_def
+                         heap_to_user_data_def map_comp_def Let_def
                   split: option.split_asm)
    done
 
@@ -704,7 +704,7 @@ lemma c_to_haskell:
           apply (clarsimp simp: full_invs_if'_def)
           apply (rename_tac uc mode s' uc' s)
           apply (frule ex_abs_ksReadyQueues_asrt)
-          apply (clarsimp simp: absKState_crelation  rf_sr_def)
+          apply (clarsimp simp: absKState_crelation rf_sr_def)
           apply (frule invs_valid_stateI')
           apply (rule_tac x="((uc,s),mode)" in bexI)
            apply simp

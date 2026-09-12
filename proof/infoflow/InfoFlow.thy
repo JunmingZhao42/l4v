@@ -85,7 +85,7 @@ inductive_set subjectReads :: "'a auth_graph \<Rightarrow> 'a \<Rightarrow> 'a s
      Here now suppose t is a sender of an IPC and p is its IPC buffer, to which
      it necessarily has Read authority. Suppose t is blocked waiting to complete
      the send, and the receiver completes the rendezvous.
-     IF t is in l's domain, then the IPC buffer  had better be too, since it
+     IF t is in l's domain, then the IPC buffer had better be too, since it
      will clearly be read during the operation to send the IPC *)
 | reads_read_thread_read_pages:
   "\<lbrakk> t \<in> subjectReads g l; (t,Read,p) \<in> g \<rbrakk>
@@ -224,7 +224,7 @@ definition states_equiv_for ::
      equiv_for (P \<circ> fst) is_original_cap s s' \<and>
      equiv_for Q interrupt_states s s' \<and>
      equiv_for Q interrupt_irq_node s s' \<and>
-     equiv_for S  ready_queues s s' \<and>
+     equiv_for S ready_queues s s' \<and>
      equiv_asids R s s' \<and>
      equiv_hyp P s s' \<and>
      equiv_fpu P s s'"

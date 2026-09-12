@@ -770,7 +770,7 @@ abbreviation integrity_cdt_state where
      (\<forall>x. integrity_cdt aag subjects (cdt s) (tcb_states_of_state s) x
                         (cdt s x,is_original_cap s x) (cdt s' x, is_original_cap s' x))"
 
-abbreviation "cdt_integrity aag \<equiv> integrity_cdt (aag :: 'a PAS) {pasSubject aag} "
+abbreviation "cdt_integrity aag \<equiv> integrity_cdt (aag :: 'a PAS) {pasSubject aag}"
 
 abbreviation cdt_integrity_state where
   "cdt_integrity_state aag s s' \<equiv>
@@ -798,7 +798,7 @@ abbreviation integrity_cdt_list_state where
 abbreviation "cdt_list_integrity aag \<equiv> integrity_cdt_list (aag :: 'a PAS) {pasSubject aag}"
 
 abbreviation cdt_list_integrity_state where
-  "cdt_list_integrity_state aag  s s' \<equiv>
+  "cdt_list_integrity_state aag s s' \<equiv>
      (\<forall>x. integrity_cdt_list (aag :: 'a PAS) {pasSubject aag} (cdt s) (tcb_states_of_state s) x
                              (cdt_list s x) (cdt_list s' x))"
 

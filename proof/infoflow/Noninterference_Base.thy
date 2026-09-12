@@ -914,7 +914,7 @@ lemma ipurge_eq'_helper:
      t \<in> ts; confidentiality_u \<rbrakk>
    \<Longrightarrow> False"
   apply (cut_tac s=s and t=t and as=as and u=u in sources_eq, simp+)
-  apply (clarsimp  simp: sources_Cons | safe)+
+  apply (clarsimp simp: sources_Cons | safe)+
    apply (rename_tac s')
    apply (drule_tac x=t in bspec, simp)
    apply clarsimp
